@@ -129,6 +129,7 @@ public class NewMessageActivity extends AppCompatActivity {
         startPlaying();
     }
 
+
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
