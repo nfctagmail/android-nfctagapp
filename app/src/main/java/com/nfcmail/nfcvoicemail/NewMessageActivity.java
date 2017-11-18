@@ -39,10 +39,9 @@ public class NewMessageActivity extends AppCompatActivity {
     private MediaPlayer mPlayer = null;
 
     private boolean mStartRecording = true;
-    private int i = 0;
     private ProgressBar mProgressBar;
     private CountDownTimer mCountDownTimer;
-
+    private boolean isCountDownOver = false;
 
 
 
@@ -86,6 +85,8 @@ public class NewMessageActivity extends AppCompatActivity {
         findViewById(R.id.playButton).setEnabled(false);
         findViewById(R.id.playButton).setBackgroundTintList(this.getResources().getColorStateList(R.color.colorButtonDisabled));
 
+        findViewById(R.id.recordButton).setBackgroundTintList(this.getResources().getColorStateList(R.color.colorButtonDisabled));
+
         mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
@@ -93,6 +94,7 @@ public class NewMessageActivity extends AppCompatActivity {
                 mPlayer = null;
                 findViewById(R.id.playButton).setEnabled(true);
                 findViewById(R.id.playButton).setBackgroundTintList(NewMessageActivity.getAppContext().getResources().getColorStateList(R.color.colorAccent));
+                findViewById(R.id.recordButton).setBackgroundTintList(NewMessageActivity.getAppContext().getResources().getColorStateList(R.color.colorRecord));
             }
         });
 
@@ -120,6 +122,7 @@ public class NewMessageActivity extends AppCompatActivity {
         }
 
         mRecorder.start();
+        isCountDownOver = false;
     }
 
     private void stopRecording() {
@@ -150,27 +153,27 @@ public class NewMessageActivity extends AppCompatActivity {
         final ImageButton mRecordButton = findViewById(R.id.recordButton);
         final ImageButton mPlayButton = findViewById(R.id.playButton);
 
-        /*final AnimatedVectorDrawable drawable = (AnimatedVectorDrawable)getDrawable(R.drawable.animated_record_progressbar);
-        final ImageView progressbar = findViewById(R.id.record_progressbar);
-        progressbar.setImageDrawable(drawable);*/
-
         final Animation recordInflateButton = AnimationUtils.loadAnimation(this, R.anim.recordbutton);
         recordInflateButton.setRepeatCount(Animation.INFINITE);
 
         mProgressBar = findViewById(R.id.progressBar);
         mProgressBar.setProgress(0);
-        mCountDownTimer = new CountDownTimer(15000,1000) {
+        mCountDownTimer = new CountDownTimer(15000,100) {
 
             @Override
             public void onTick(long msUntilFinished) {
-                i++;
-                mProgressBar.setProgress((i/15)*100);
-                Log.i(LOG_TAG, "+1sec");
+                int i = (15000 - Math.toIntExact(msUntilFinished))/150;
+                mProgressBar.setProgress(i);
+                Log.i(LOG_TAG, ""+(i)+"");
             }
 
             @Override
             public void onFinish() {
                 mProgressBar.setProgress(100);
+                onRecord(mStartRecording);
+                mStartRecording = !mStartRecording;
+                mRecordButton.clearAnimation();
+                isCountDownOver = true;
             }
         };
 
@@ -187,10 +190,12 @@ public class NewMessageActivity extends AppCompatActivity {
                          mCountDownTimer.start();
 
                      } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                         onRecord(mStartRecording);
-                         mStartRecording = !mStartRecording;
-                         mRecordButton.clearAnimation();
-                         mCountDownTimer.cancel();
+                         if(!isCountDownOver) {
+                             onRecord(mStartRecording);
+                             mStartRecording = !mStartRecording;
+                             mRecordButton.clearAnimation();
+                             mCountDownTimer.cancel();
+                         }
                      }
                      return true;
                  }
