@@ -52,4 +52,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="0.0" />
 
+    <!-- TODO
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="344dp"
+        android:layout_height="171dp"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="8dp" />-->
+
 </android.support.constraint.ConstraintLayout>
