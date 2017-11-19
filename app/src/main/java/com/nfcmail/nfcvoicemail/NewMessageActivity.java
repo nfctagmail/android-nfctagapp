@@ -20,6 +20,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -40,14 +42,9 @@ public class NewMessageActivity extends AppCompatActivity {
 
     private boolean mStartRecording = true;
     private ProgressBar mProgressBar;
+    private Button sendButton;
     private CountDownTimer mCountDownTimer;
     private boolean isCountDownOver = false;
-
-
-
-
-    //private boolean sinusoidState = true;
-    //private AnimatedVectorDrawable drawableSinusoid;
 
     private static Context context;
 
@@ -84,7 +81,6 @@ public class NewMessageActivity extends AppCompatActivity {
 
         findViewById(R.id.playButton).setEnabled(false);
         findViewById(R.id.playButton).setBackgroundTintList(this.getResources().getColorStateList(R.color.colorButtonDisabled));
-
         findViewById(R.id.recordButton).setBackgroundTintList(this.getResources().getColorStateList(R.color.colorButtonDisabled));
 
         mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -97,7 +93,6 @@ public class NewMessageActivity extends AppCompatActivity {
                 findViewById(R.id.recordButton).setBackgroundTintList(NewMessageActivity.getAppContext().getResources().getColorStateList(R.color.colorRecord));
             }
         });
-
     }
 
     private void onRecord(boolean start) {
@@ -141,7 +136,6 @@ public class NewMessageActivity extends AppCompatActivity {
 
         NewMessageActivity.context = getApplicationContext();
 
-        TextView nfcTextView = findViewById(R.id.nfcTextView);
         ImageView nfcImageView = findViewById(R.id.nfcImageView);
 
         // (Tutorial comment) Record to the external cache directory for visibility
@@ -152,11 +146,12 @@ public class NewMessageActivity extends AppCompatActivity {
 
         final ImageButton mRecordButton = findViewById(R.id.recordButton);
         final ImageButton mPlayButton = findViewById(R.id.playButton);
-
+        mProgressBar = findViewById(R.id.progressBar);
+        sendButton = findViewById(R.id.sendButton);
         final Animation recordInflateButton = AnimationUtils.loadAnimation(this, R.anim.recordbutton);
         recordInflateButton.setRepeatCount(Animation.INFINITE);
 
-        mProgressBar = findViewById(R.id.progressBar);
+
         mProgressBar.setProgress(0);
         mCountDownTimer = new CountDownTimer(15000,100) {
 
@@ -164,7 +159,6 @@ public class NewMessageActivity extends AppCompatActivity {
             public void onTick(long msUntilFinished) {
                 int i = (15000 - Math.toIntExact(msUntilFinished))/150;
                 mProgressBar.setProgress(i);
-                Log.i(LOG_TAG, ""+(i)+"");
             }
 
             @Override
@@ -174,6 +168,7 @@ public class NewMessageActivity extends AppCompatActivity {
                 mStartRecording = !mStartRecording;
                 mRecordButton.clearAnimation();
                 isCountDownOver = true;
+                sendButton.setVisibility(View.VISIBLE);
             }
         };
 
@@ -185,8 +180,7 @@ public class NewMessageActivity extends AppCompatActivity {
                          onRecord(mStartRecording);
                          mStartRecording = !mStartRecording;
                          mRecordButton.startAnimation(recordInflateButton);
-                         //drawable.start();
-
+                         sendButton.setVisibility(View.GONE);
                          mCountDownTimer.start();
 
                      } else if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -195,6 +189,7 @@ public class NewMessageActivity extends AppCompatActivity {
                              mStartRecording = !mStartRecording;
                              mRecordButton.clearAnimation();
                              mCountDownTimer.cancel();
+                             sendButton.setVisibility(View.VISIBLE);
                          }
                      }
                      return true;
@@ -208,12 +203,26 @@ public class NewMessageActivity extends AppCompatActivity {
                 startPlaying();
             }
         });
+
+        //final FrameLayout includeSend = (FrameLayout)findViewById(R.id.includeSendMethod);
+        //final Animation bottomUp = AnimationUtils.loadAnimation(this, R.anim.bottom_up);
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Animation bottomUp = AnimationUtils.loadAnimation(getAppContext(), R.anim.bottom_up);
+                FrameLayout includeSend = (FrameLayout)findViewById(R.id.includeSendMethod);
+                includeSend.startAnimation(bottomUp);
+                includeSend.setVisibility(View.VISIBLE);
+            }
+        });
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        // In case the user quits the app without stopping the recording
+        // In case the user quits the activity without stopping the recording
         if (mRecorder != null) {
             mRecorder.release();
             mRecorder = null;

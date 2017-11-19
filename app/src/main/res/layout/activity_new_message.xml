@@ -59,23 +59,6 @@
         app:layout_constraintVertical_bias="0.78"
         app:srcCompat="@drawable/ic_play_arrow_black_24dp" />
 
-    <!--<ImageView
-        android:id="@+id/record_progressbar"
-        android:layout_width="325dp"
-        android:layout_height="110dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/recordButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.76"
-        app:srcCompat="@drawable/animated_record_progressbar" />-->
-
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
@@ -96,7 +79,7 @@
         app:layout_constraintVertical_bias="0.85" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/instructions"
         android:layout_width="318dp"
         android:layout_height="79dp"
         android:layout_marginBottom="8dp"
@@ -115,7 +98,7 @@
         app:layout_constraintVertical_bias="0.873" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/sendButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -123,10 +106,19 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Envoyer"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recordButton" />
 
+    <include
+        android:id="@+id/includeSendMethod"
+        layout="@layout/send_choose_method"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:elevation="-2dp"
+        android:visibility="gone" />
 
 </android.support.constraint.ConstraintLayout>

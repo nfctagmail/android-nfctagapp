@@ -21,7 +21,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <include
-        android:id="@+id/include"
+        android:id="@+id/includeContent"
         layout="@layout/content_main" />
 
     <android.support.design.widget.FloatingActionButton
@@ -31,7 +31,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:tint="@android:color/background_light"
-        app:layout_anchor="@+id/include"
+        app:layout_anchor="@+id/includeContent"
         app:layout_anchorGravity="right|bottom"
         app:srcCompat="@drawable/ic_add_black_24dp"
         tools:layout_editor_absoluteY="453dp" />
