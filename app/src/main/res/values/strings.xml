@@ -1,4 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">NFC Voice Mail</string>
     <string name="action_settings">Settings</string>
+    <string name="tap_phone_nfc">Put your phone against a NFC tag to read its message, or tap the button to configure a new NFC tag.</string>
+    <string name="refresh">Refresh</string>
+    <string name="activity_new_message">Record an audio message by pressing and holding the red button, release it to stop recording.</string>
+    <string name="activity_new_text_message">Type the message you want to send to the tag here.</string>
 </resources>

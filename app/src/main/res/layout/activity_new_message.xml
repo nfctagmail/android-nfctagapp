@@ -7,20 +7,6 @@
     android:layout_height="match_parent"
     tools:context="com.nfcmail.nfcvoicemail.NewMessageActivity">
 
-    <ImageView
-        android:id="@+id/nfcImageView"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:tint="@android:color/darker_gray"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_phonelink_ring_black_192dp" />
-
     <ImageButton
         android:id="@+id/recordButton"
         android:layout_width="97dp"
@@ -28,6 +14,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/red_record_button"
+        android:contentDescription="red record button"
         android:minHeight="60dp"
         android:minWidth="60dp"
         android:tint="@android:color/background_light"
@@ -50,6 +37,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:backgroundTint="@color/colorButtonDisabled"
+        android:contentDescription="play button"
         android:tint="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,15 +53,12 @@
         android:layout_width="219dp"
         android:layout_height="16dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="0"
         app:layout_constraintBottom_toTopOf="@+id/recordButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintEnd_toStartOf="@+id/time"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.85" />
@@ -87,7 +72,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Enregistrez un message audio en restant appuyé sur le bouton rouge, relachez pour arrêter l'enregistrement."
+        android:text="@string/activity_new_message"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/progressBar"
@@ -107,10 +92,25 @@
         android:layout_marginTop="8dp"
         android:text="Envoyer"
         android:visibility="gone"
+        android:stateListAnimator="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recordButton" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:text="00:00/00:15"
+        app:layout_constraintBottom_toTopOf="@+id/recordButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/progressBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.85" />
 
     <include
         android:id="@+id/includeSendMethod"
@@ -118,7 +118,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
-        android:elevation="-2dp"
         android:visibility="gone" />
 
 </android.support.constraint.ConstraintLayout>

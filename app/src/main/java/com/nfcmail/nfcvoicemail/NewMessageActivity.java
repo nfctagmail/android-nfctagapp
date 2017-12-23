@@ -135,7 +135,6 @@ public class NewMessageActivity extends AppCompatActivity {
             Log.e(LOG_TAG, "prepare() failed");
         }
 
-
         // TODO bugfix : check if mFileName still exists and wasn't deleted before trying to record to it
         mRecorder.start();
 
@@ -166,6 +165,24 @@ public class NewMessageActivity extends AppCompatActivity {
         startPlaying();
     }
 
+    public void slideCardUp()
+    {
+        /*FrameLayout includeSend = (FrameLayout)findViewById(R.id.includeSendMethod);
+        Animation bottomUp = AnimationUtils.loadAnimation(this, R.anim.bottom_up);
+*/
+        sendButton = findViewById(R.id.sendButton);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Animation bottomUp = AnimationUtils.loadAnimation(getAppContext(), R.anim.bottom_up);
+                View includeSend = findViewById(R.id.includeSendMethod);
+                ImageButton backgroundCard = includeSend.findViewById(R.id.nfcSendButton);
+
+                includeSend.startAnimation(bottomUp);
+                includeSend.setVisibility(View.VISIBLE);
+            }
+        });
+    }
 
     @SuppressLint("NewApi")
     @Override
@@ -175,7 +192,7 @@ public class NewMessageActivity extends AppCompatActivity {
 
         NewMessageActivity.context = getApplicationContext();
 
-        ImageView nfcImageView = findViewById(R.id.nfcImageView);
+        //ImageView nfcImageView = findViewById(R.id.nfcImageView);
 
         // (Tutorial comment) Record to the external cache directory for visibility
         mFileName = getExternalCacheDir().getAbsolutePath();
@@ -190,8 +207,8 @@ public class NewMessageActivity extends AppCompatActivity {
         final Animation recordInflateButton = AnimationUtils.loadAnimation(this, R.anim.recordbutton);
         recordInflateButton.setRepeatCount(Animation.INFINITE);
 
-
         mProgressBar.setProgress(0);
+
         mCountDownTimer = new CountDownTimer(15000,100) {
 
             @Override
@@ -222,7 +239,6 @@ public class NewMessageActivity extends AppCompatActivity {
                          mRecordButton.startAnimation(recordInflateButton);
                          sendButton.setVisibility(View.GONE);
                          mCountDownTimer.start();
-                         Log.i(LOG_TAG, "Finger down countdown" + isCountDownOver);
                      }
                      else if (event.getAction() == MotionEvent.ACTION_UP) {
                          if(!isCountDownOver) {
@@ -231,7 +247,6 @@ public class NewMessageActivity extends AppCompatActivity {
                              mRecordButton.clearAnimation();
                              mCountDownTimer.cancel();
                              sendButton.setVisibility(View.VISIBLE);
-                             Log.i(LOG_TAG, "Finger Up");
                          }
                      }
                      return true;
@@ -246,18 +261,7 @@ public class NewMessageActivity extends AppCompatActivity {
             }
         });
 
-        //final FrameLayout includeSend = (FrameLayout)findViewById(R.id.includeSendMethod);
-        //final Animation bottomUp = AnimationUtils.loadAnimation(this, R.anim.bottom_up);
-
-        /*sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Animation bottomUp = AnimationUtils.loadAnimation(getAppContext(), R.anim.bottom_up);
-                FrameLayout includeSend = (FrameLayout)findViewById(R.id.includeSendMethod);
-                includeSend.startAnimation(bottomUp);
-                includeSend.setVisibility(View.VISIBLE);
-            }
-        });*/
+        slideCardUp();
 
     }
 
